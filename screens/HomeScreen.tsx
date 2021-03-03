@@ -4,13 +4,22 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
-const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC = (props): JSX.Element => {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
-      <View style={styles.container}>
-        <Text>Home Screen</Text>
+      <View style={styles.datecontainer}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          {new Date().toDateString()}
+        </Text>
+      </View>
+      <Text style={styles.statusmessage}>
+        This will be motivational text displaying the status of the progress for
+        the week.
+      </Text>
+      <View style={styles.remaining}>
+        <Text>Remaining Space</Text>
       </View>
     </View>
   );
@@ -19,13 +28,27 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#fff",
+    alignItems: "stretch",
   },
-  container: {
-    flex: 8,
-    backgroundColor: "#fff",
+  datecontainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "tomato",
+  },
+  remaining: {
+    flex: 6,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "yellow",
+  },
+  statusmessage: {
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 20,
+    fontSize: 16,
+    backgroundColor: "aquamarine",
   },
 });
 
