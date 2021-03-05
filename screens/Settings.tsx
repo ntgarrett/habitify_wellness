@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 
 import AppHeader from "../components/AppHeader";
+import SettingCell from "../components/SettingCell";
 import theme from "../components/theme";
 
 const Settings: React.FC = (props): JSX.Element => {
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Settings" />
-      <View style={styles.container}>
-        <Text>Settings Screen</Text>
+      <SettingCell settingName="Track Hydration" iconName="water" />
+      <SettingCell settingName="Track Eating" iconName="nutrition" />
+      <SettingCell settingName="Track Sleep" iconName="bed" />
+      <SettingCell settingName="Track Exercise" iconName="barbell" />
+      <View style={styles.remaining}>
+        <Text>Remaining Space</Text>
       </View>
     </View>
   );
@@ -19,13 +28,13 @@ const Settings: React.FC = (props): JSX.Element => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#fff",
+    alignItems: "stretch",
   },
-  container: {
-    flex: 8,
-    backgroundColor: "#fff",
+  remaining: {
+    flex: 3,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "yellow",
   },
 });
 

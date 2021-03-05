@@ -36,12 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "tomato",
   },
-  remaining: {
-    flex: 6,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "yellow",
-  },
   statusmessage: {
     flex: 1,
     paddingLeft: 10,
@@ -49,6 +43,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     fontSize: 16,
     backgroundColor: "aquamarine",
+  },
+  remaining: {
+    flex: 6,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "yellow",
   },
 });
 

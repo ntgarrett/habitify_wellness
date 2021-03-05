@@ -6,7 +6,7 @@ const theme = {
     card: "#3D5A80",
     text: "#FFF",
     border: "#293241",
-    notification: "#FFF",
+    notification: "#808080",
   },
 };
 
