@@ -7,11 +7,12 @@ import theme from "../components/theme";
 interface SettingProps {
   settingName: string;
   iconName: string;
+  description: string;
 }
 
 const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const { settingName, iconName } = props;
+  const { settingName, iconName, description } = props;
 
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
@@ -22,10 +23,13 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
       <Ionicons
         name={iconName}
         color={theme.colors.card}
-        size={30}
+        size={40}
         style={{ marginLeft: 20 }}
       />
-      <Text style={styles.text}>{settingName}</Text>
+      <View>
+        <Text style={styles.title}>{settingName}</Text>
+        <Text style={{ marginLeft: 15 }}>{description}</Text>
+      </View>
       <Switch
         style={styles.switch}
         trackColor={{
@@ -41,14 +45,14 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 20,
-    marginLeft: 15,
-  },
   cell: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+  },
+  title: {
+    fontSize: 20,
+    marginLeft: 15,
   },
   switch: {
     marginLeft: "auto",
