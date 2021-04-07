@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Switch } from "react-native";
+import { useDispatch } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { toggleSetting } from "../state/user_settings/actions";
 import theme from "../components/theme";
 
 interface SettingProps {
   settingName: string;
   iconName: string;
   description: string;
+  stateName: string;
 }
 
 const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const { settingName, iconName, description } = props;
+  const { settingName, iconName, description, stateName } = props;
+
+  const dispatch = useDispatch();
 
   const toggleSwitch = () => {
+    dispatch(toggleSetting(stateName, !isEnabled));
     setIsEnabled((previousState) => !previousState);
   };
 

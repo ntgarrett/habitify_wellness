@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, TextStyleIOS } from "react-native";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 
 import theme from "./theme";
 
@@ -7,10 +7,10 @@ interface HeaderProps {
   title: string;
 }
 
-const AppHeader: React.FC<HeaderProps> = (props): JSX.Element => {
+const AppHeader: React.FC<HeaderProps> = ({ title }): JSX.Element => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.title}>{title}</Text>
     </SafeAreaView>
   );
 };
