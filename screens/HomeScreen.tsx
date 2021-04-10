@@ -5,13 +5,20 @@ import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
 const HomeScreen: React.FC = (props): JSX.Element => {
+  const dateFormat = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
       <View style={styles.datecontainer}>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          {new Date().toDateString()}
+          {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
       <Text style={styles.statusmessage}>
