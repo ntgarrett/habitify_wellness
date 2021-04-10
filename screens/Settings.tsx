@@ -3,12 +3,6 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 
 import AppHeader from "../components/AppHeader";
 import SettingCell from "../components/SettingCell";
-import {
-  IS_TRACKING_HYDRATION,
-  IS_TRACKING_EATING,
-  IS_TRACKING_SLEEP,
-  IS_TRACKING_EXERCISE,
-} from "../state/user_settings/types";
 import theme from "../components/theme";
 
 const Settings: React.FC = (props): JSX.Element => {
@@ -20,25 +14,29 @@ const Settings: React.FC = (props): JSX.Element => {
         settingName="Track Hydration"
         iconName="water"
         description="Did I drink enough water today?"
-        stateName={IS_TRACKING_HYDRATION}
+        actionName="IS_TRACKING_HYDRATION"
+        stateName="hydration"
       />
       <SettingCell
         settingName="Track Eating"
         iconName="nutrition"
         description="Am I satisfied with what I ate today?"
-        stateName={IS_TRACKING_EATING}
+        actionName="IS_TRACKING_EATING"
+        stateName="eating"
       />
       <SettingCell
         settingName="Track Sleep"
         iconName="bed"
         description="Did I get proper sleep last night?"
-        stateName={IS_TRACKING_SLEEP}
+        actionName="IS_TRACKING_SLEEP"
+        stateName="sleep"
       />
       <SettingCell
         settingName="Track Exercise"
         iconName="barbell"
         description="Did I exercise today?"
-        stateName={IS_TRACKING_EXERCISE}
+        actionName="IS_TRACKING_EXERCISE"
+        stateName="exercise"
       />
       <View style={styles.remaining}>
         <Text>Remaining Space</Text>

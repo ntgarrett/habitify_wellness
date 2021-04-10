@@ -1,27 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, Switch } from "react-native";
-import { useDispatch } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { toggleSetting } from "../state/user_settings/actions";
+import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
 import theme from "../components/theme";
 
 interface SettingProps {
   settingName: string;
   iconName: string;
   description: string;
+  actionName: string;
   stateName: string;
 }
 
 const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const { settingName, iconName, description, stateName } = props;
+  const { settingName, iconName, description, actionName, stateName } = props;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  var currentState: boolean = useAppSelector((state) => {
+    switch (stateName) {
+      case "hydration": {
+        return state.settings.userSettings.hydration.isTrackingHydration;
+      }
+      case "eating": {
+        return state.settings.userSettings.eating.isTrackingEating;
+      }
+      case "sleep": {
+        return state.settings.userSettings.sleep.isTrackingSleep;
+      }
+      case "exercise": {
+        return state.settings.userSettings.exercise.isTrackingExercise;
+      }
+    }
+  });
 
   const toggleSwitch = () => {
-    dispatch(toggleSetting(stateName, !isEnabled));
-    setIsEnabled((previousState) => !previousState);
+    dispatch(toggleSetting(actionName, !currentState));
+    currentState = !currentState;
   };
 
   return (
@@ -44,7 +61,7 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
         }}
         thumbColor={theme.colors.primary}
         onValueChange={toggleSwitch}
-        value={isEnabled}
+        value={currentState}
       />
     </View>
   );
@@ -63,6 +80,7 @@ const styles = StyleSheet.create({
   switch: {
     marginLeft: "auto",
     marginRight: 20,
+    transform: [{ scaleX: 1.4 }, { scaleY: 1.4 }],
   },
 });
 
