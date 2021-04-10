@@ -15,28 +15,28 @@ const Settings: React.FC = (props): JSX.Element => {
         iconName="water"
         description="Did I drink enough water today?"
         actionName="IS_TRACKING_HYDRATION"
-        stateName="hydration"
+        stateType="hydration"
       />
       <SettingCell
         settingName="Track Eating"
         iconName="nutrition"
         description="Am I satisfied with what I ate today?"
         actionName="IS_TRACKING_EATING"
-        stateName="eating"
+        stateType="eating"
       />
       <SettingCell
         settingName="Track Sleep"
         iconName="bed"
         description="Did I get proper sleep last night?"
         actionName="IS_TRACKING_SLEEP"
-        stateName="sleep"
+        stateType="sleep"
       />
       <SettingCell
         settingName="Track Exercise"
         iconName="barbell"
         description="Did I exercise today?"
         actionName="IS_TRACKING_EXERCISE"
-        stateName="exercise"
+        stateType="exercise"
       />
       <View style={styles.remaining}>
         <Text>Remaining Space</Text>

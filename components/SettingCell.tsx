@@ -11,16 +11,16 @@ interface SettingProps {
   iconName: string;
   description: string;
   actionName: string;
-  stateName: string;
+  stateType: string;
 }
 
 const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
-  const { settingName, iconName, description, actionName, stateName } = props;
+  const { settingName, iconName, description, actionName, stateType } = props;
 
   const dispatch = useAppDispatch();
 
   var currentState: boolean = useAppSelector((state) => {
-    switch (stateName) {
+    switch (stateType) {
       case "hydration": {
         return state.settings.userSettings.hydration.isTrackingHydration;
       }
