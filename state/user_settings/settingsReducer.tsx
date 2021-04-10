@@ -11,19 +11,15 @@ export interface UserSettingsState {
   userSettings: {
     hydration: {
       isTrackingHydration: boolean;
-      id: number;
     };
     eating: {
       isTrackingEating: boolean;
-      id: number;
     };
     sleep: {
       isTrackingSleep: boolean;
-      id: number;
     };
     exercise: {
       isTrackingExercise: boolean;
-      id: number;
     };
   };
 }
@@ -32,19 +28,15 @@ const initial_state: UserSettingsState = {
   userSettings: {
     hydration: {
       isTrackingHydration: false,
-      id: 1,
     },
     eating: {
       isTrackingEating: false,
-      id: 2,
     },
     sleep: {
       isTrackingSleep: false,
-      id: 3,
     },
     exercise: {
       isTrackingExercise: false,
-      id: 4,
     },
   },
 };
@@ -60,7 +52,6 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           hydration: {
-            ...state.userSettings.hydration,
             isTrackingHydration: action.payload,
           },
         },
@@ -72,7 +63,6 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           eating: {
-            ...state.userSettings.eating,
             isTrackingEating: action.payload,
           },
         },
@@ -84,7 +74,6 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           sleep: {
-            ...state.userSettings.sleep,
             isTrackingSleep: action.payload,
           },
         },
@@ -96,7 +85,6 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           exercise: {
-            ...state.userSettings.exercise,
             isTrackingExercise: action.payload,
           },
         },
