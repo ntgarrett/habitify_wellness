@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 
+import { useAppSelector } from "../state/user_settings/hooks";
+import { UserSettingsState } from "../state/user_settings/settingsReducer";
 import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
@@ -12,6 +14,43 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     day: "numeric",
   };
 
+  const currentState: UserSettingsState = useAppSelector((state) => {
+    return state.settings;
+  });
+
+  interface TrackedType {
+    tracking: any;
+    description: string;
+    id: number;
+  }
+
+  const currentlyTracking: TrackedType[] = [
+    {
+      tracking: currentState.userSettings.hydration.isTrackingHydration,
+      description: "Proper hydration",
+      id: 1,
+    },
+    {
+      tracking: currentState.userSettings.eating.isTrackingEating,
+      description: "Desired food intake",
+      id: 2,
+    },
+    {
+      tracking: currentState.userSettings.sleep.isTrackingSleep,
+      description: "Quality of sleep",
+      id: 3,
+    },
+    {
+      tracking: currentState.userSettings.exercise.isTrackingExercise,
+      description: "Getting exercise",
+      id: 4,
+    },
+  ].filter((setting) => setting.tracking === true);
+
+  const noneTracked: boolean = currentlyTracking.every(
+    (elem) => elem.tracking === false
+  );
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
@@ -21,10 +60,22 @@ const HomeScreen: React.FC = (props): JSX.Element => {
           {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
-      <Text style={styles.statusmessage}>
-        This will be motivational text displaying the status of the progress for
-        the week.
-      </Text>
+      <View style={styles.trackinglist}>
+        <Text>My daily goals I'm tracking:{"\n"}</Text>
+        <View>
+          {noneTracked ? (
+            <Text>
+              None. Go to Settings to enable tracking your wellness goals!
+            </Text>
+          ) : (
+            currentlyTracking.map((setting) => (
+              <Text key={setting.id}>
+                {"\u2022"} {setting.description}
+              </Text>
+            ))
+          )}
+        </View>
+      </View>
       <View style={styles.remaining}>
         <Text>Remaining Space</Text>
       </View>
@@ -43,16 +94,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "tomato",
   },
-  statusmessage: {
-    flex: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 20,
-    fontSize: 16,
-    backgroundColor: "aquamarine",
+  trackinglist: {
+    flex: 4,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "cyan",
   },
   remaining: {
-    flex: 6,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "yellow",
