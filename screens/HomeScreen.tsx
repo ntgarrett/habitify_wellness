@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "cyan",
   },
   remaining: {
-    flex: 2,
+    flex: 3,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "yellow",
