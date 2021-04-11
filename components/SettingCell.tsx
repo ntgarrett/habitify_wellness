@@ -19,7 +19,7 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
-  var currentState: boolean = useAppSelector((state) => {
+  var currentStateValue: boolean = useAppSelector((state) => {
     switch (stateType) {
       case "hydration": {
         return state.settings.userSettings.hydration.isTrackingHydration;
@@ -37,8 +37,8 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
   });
 
   const toggleSwitch = () => {
-    dispatch(toggleSetting(actionName, !currentState));
-    currentState = !currentState;
+    dispatch(toggleSetting(actionName, !currentStateValue));
+    currentStateValue = !currentStateValue;
   };
 
   return (
@@ -61,7 +61,7 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
         }}
         thumbColor={theme.colors.primary}
         onValueChange={toggleSwitch}
-        value={currentState}
+        value={currentStateValue}
       />
     </View>
   );
