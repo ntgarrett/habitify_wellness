@@ -26,7 +26,7 @@ const App: React.FC = () => {
                 if (route.name === "Home") {
                   iconName = focused ? "home-sharp" : "home-outline";
                 } else if (route.name === "My Progress") {
-                  iconName = focused ? "calendar-sharp" : "calendar-outline";
+                  iconName = focused ? "bar-chart" : "bar-chart-outline";
                 } else if (route.name === "Settings") {
                   iconName = focused ? "settings-sharp" : "settings-outline";
                 }
