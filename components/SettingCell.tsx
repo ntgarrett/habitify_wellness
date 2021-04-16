@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, Switch } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { toggleSetting } from "../state/user_settings/actions";
+import { updateToggledSetting } from "../state/user_settings/actions";
 import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
-import theme from "../components/theme";
+import theme from "./theme";
 
 interface SettingProps {
   settingName: string;
@@ -33,11 +33,14 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
       case "exercise": {
         return state.settings.userSettings.exercise.isTrackingExercise;
       }
+      case "notifications": {
+        return state.settings.userSettings.schedule.pushNotificationsEnabled;
+      }
     }
   });
 
   const toggleSwitch = () => {
-    dispatch(toggleSetting(actionName, !currentStateValue));
+    dispatch(updateToggledSetting(actionName, !currentStateValue));
     currentStateValue = !currentStateValue;
   };
 
@@ -45,13 +48,15 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
     <View style={styles.cell}>
       <Ionicons
         name={iconName}
-        color={theme.colors.card}
-        size={40}
+        color={theme.colors.border}
+        size={30}
         style={{ marginLeft: 20 }}
       />
       <View>
         <Text style={styles.title}>{settingName}</Text>
-        <Text style={{ marginLeft: 15 }}>{description}</Text>
+        <Text style={{ fontSize: 12, marginLeft: 15, color: "grey" }}>
+          {description}
+        </Text>
       </View>
       <Switch
         style={styles.switch}
@@ -69,18 +74,19 @@ const SettingCell: React.FC<SettingProps> = (props): JSX.Element => {
 
 const styles = StyleSheet.create({
   cell: {
-    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 15,
     flexDirection: "row",
     alignItems: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     marginLeft: 15,
   },
   switch: {
     marginLeft: "auto",
     marginRight: 20,
-    transform: [{ scaleX: 1.4 }, { scaleY: 1.4 }],
+    transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
   },
 });
 
