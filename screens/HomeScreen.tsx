@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 
 import { useAppSelector } from "../state/user_settings/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
@@ -7,7 +13,7 @@ import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
 const HomeScreen: React.FC = (props): JSX.Element => {
-  const dateFormat = {
+  const dateFormat: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -56,20 +62,20 @@ const HomeScreen: React.FC = (props): JSX.Element => {
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
       <View style={styles.datecontainer}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 20 }}>
           {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
       <View style={styles.trackinglist}>
-        <Text>My daily goals I'm tracking:{"\n"}</Text>
+        <Text style={{ fontSize: 17 }}>My daily goals I'm tracking:{"\n"}</Text>
         <View>
           {noneTracked ? (
-            <Text>
+            <Text style={styles.nothingtracked}>
               None. Go to Settings to enable tracking your wellness goals!
             </Text>
           ) : (
             currentlyTracking.map((setting) => (
-              <Text key={setting.id}>
+              <Text key={setting.id} style={{ fontSize: 15 }}>
                 {"\u2022"} {setting.description}
               </Text>
             ))
@@ -77,7 +83,13 @@ const HomeScreen: React.FC = (props): JSX.Element => {
         </View>
       </View>
       <View style={styles.remaining}>
-        <Text>Remaining Space</Text>
+        <TouchableOpacity
+          disabled={true}
+          onPress={() => {}}
+          style={styles.button}
+        >
+          <Text style={{ fontSize: 20 }}>Input Today's Results</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -98,12 +110,26 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "cyan",
+    //backgroundColor: "cyan",
+  },
+  button: {
+    backgroundColor: "#DDDDDD",
+    alignItems: "center",
+    padding: 15,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "cyan",
+  },
+  nothingtracked: {
+    textAlign: "center",
+    maxWidth: "55%",
+    color: "grey",
   },
   remaining: {
     flex: 3,
     justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "yellow",
   },
 });
