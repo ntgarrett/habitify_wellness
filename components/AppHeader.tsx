@@ -17,7 +17,7 @@ const AppHeader: React.FC<HeaderProps> = ({ title }): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 65,
     backgroundColor: theme.colors.card,
     justifyContent: "center",
     alignItems: "center",
