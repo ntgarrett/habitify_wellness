@@ -5,6 +5,9 @@ import {
   IS_TRACKING_EATING,
   IS_TRACKING_SLEEP,
   IS_TRACKING_EXERCISE,
+  UPDATE_DAYS_EXERCISE_PER_WEEK,
+  ENABLE_PUSH_NOTIFICATIONS,
+  UPDATE_SCHEDULE_TIME,
 } from "./types";
 
 export interface UserSettingsState {
@@ -20,6 +23,11 @@ export interface UserSettingsState {
     };
     exercise: {
       isTrackingExercise: boolean;
+      targetDaysExercisePerWeek: number;
+    };
+    schedule: {
+      hourAndMinute: [number, number];
+      pushNotificationsEnabled: boolean;
     };
   };
 }
@@ -37,6 +45,11 @@ const initial_state: UserSettingsState = {
     },
     exercise: {
       isTrackingExercise: false,
+      targetDaysExercisePerWeek: 1,
+    },
+    schedule: {
+      hourAndMinute: [21, 0],
+      pushNotificationsEnabled: false,
     },
   },
 };
@@ -85,7 +98,44 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           exercise: {
+            ...state.userSettings.exercise,
             isTrackingExercise: action.payload,
+          },
+        },
+      };
+    }
+    case UPDATE_DAYS_EXERCISE_PER_WEEK: {
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          exercise: {
+            ...state.userSettings.exercise,
+            targetDaysExercisePerWeek: action.payload,
+          },
+        },
+      };
+    }
+    case ENABLE_PUSH_NOTIFICATIONS: {
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          schedule: {
+            ...state.userSettings.schedule,
+            pushNotificationsEnabled: action.payload,
+          },
+        },
+      };
+    }
+    case UPDATE_SCHEDULE_TIME: {
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          schedule: {
+            ...state.userSettings.schedule,
+            hourAndMinute: action.payload,
           },
         },
       };
