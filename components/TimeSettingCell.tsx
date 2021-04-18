@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import * as PushNotifications from "./PushNotifications";
 import { updateScheduleTime } from "../state/user_settings/actions";
 import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
@@ -31,10 +32,12 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
   initialTimeValue.setHours(21, 0, 0);
 
   const onChange: any = (event: Event, selectedTime: any) => {
+    // User presses cancel
     if (selectedTime === undefined) {
       setIsVisible(false);
       return;
     }
+
     setIsVisible(false);
     currentStateValue.userSettings.hourAndMinute =
       [selectedTime.getHours(), selectedTime.getMinutes()] || initialTimeValue;
@@ -45,6 +48,14 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
         currentStateValue.userSettings.hourAndMinute
       )
     );
+
+    // Push notifications already enabled, then time is changed
+    if (currentStateValue.userSettings.pushNotificationsEnabled) {
+      PushNotifications.scheduleNotifications(
+        currentStateValue.userSettings.pushNotificationsEnabled,
+        currentStateValue.userSettings.hourAndMinute
+      );
+    }
   };
 
   function convertTimeToDate(timeUnits: [number, number]) {
