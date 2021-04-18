@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, StatusBar, ScrollView } from "react-native";
 import { Divider } from "react-native-elements";
-import { Picker } from "@react-native-picker/picker";
 
 import AppHeader from "../components/AppHeader";
-import SettingCell from "../components/SettingCell";
+import TrackedSettingCell from "../components/TrackedSettingCell";
 import TimeSettingCell from "../components/TimeSettingCell";
 import DayPickerCell from "../components/DayPickerCell";
+import PushNotificationsCell from "../components/PushNotificationsCell";
 import theme from "../components/theme";
 
 const Settings: React.FC = (props): JSX.Element => {
-  const [numDaysExercise, setNumDaysExercise] = useState("1");
-
   return (
     <View style={styles.root}>
       <AppHeader title="Settings" />
@@ -26,28 +24,28 @@ const Settings: React.FC = (props): JSX.Element => {
             data will be displayed in My Progress.
           </Text>
         </View>
-        <SettingCell
+        <TrackedSettingCell
           settingName="Track Hydration"
           iconName="water"
           description="Did I drink enough water today?"
           actionName="IS_TRACKING_HYDRATION"
           stateType="hydration"
         />
-        <SettingCell
+        <TrackedSettingCell
           settingName="Track Eating"
           iconName="nutrition"
           description="Am I satisfied with what I ate today?"
           actionName="IS_TRACKING_EATING"
           stateType="eating"
         />
-        <SettingCell
+        <TrackedSettingCell
           settingName="Track Sleep"
           iconName="bed"
           description="Did I get proper sleep last night?"
           actionName="IS_TRACKING_SLEEP"
           stateType="sleep"
         />
-        <SettingCell
+        <TrackedSettingCell
           settingName="Track Exercise"
           iconName="barbell"
           description="Did I exercise today?"
@@ -67,12 +65,11 @@ const Settings: React.FC = (props): JSX.Element => {
           iconName="time"
           actionName="UPDATE_SCHEDULE_TIME"
         />
-        <SettingCell
+        <PushNotificationsCell
           settingName="Enable Push Notifications"
           description="Notify when updating is ready"
           iconName="notifications"
           actionName="ENABLE_PUSH_NOTIFICATIONS"
-          stateType="notifications"
         />
         <View style={{ height: 300 }}></View>
       </ScrollView>
