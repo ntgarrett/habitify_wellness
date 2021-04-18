@@ -7,6 +7,7 @@ import { updateToggledSetting } from "../state/user_settings/actions";
 import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
 import { isTrackingNothing } from "../state/user_settings/helpers";
 import * as PushNotifications from "./PushNotifications";
+import { UserSettingsState } from "../state/user_settings/settingsReducer";
 import theme from "./theme";
 
 interface SettingProps {
@@ -20,20 +21,22 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
   const { settingName, iconName, description, actionName } = props;
   const dispatch = useAppDispatch();
 
-  var hasPushNotifsEnabled: boolean = useAppSelector((state) => {
-    return state.settings.userSettings.pushNotificationsEnabled;
-  });
-
-  const timeFromState: [number, number] = useAppSelector((state) => {
-    return state.settings.userSettings.hourAndMinute;
+  var currentStateValue: UserSettingsState = useAppSelector((state) => {
+    return state.settings;
   });
 
   const toggleSwitch = () => {
-    dispatch(updateToggledSetting(actionName, !hasPushNotifsEnabled));
-    hasPushNotifsEnabled = !hasPushNotifsEnabled;
+    dispatch(
+      updateToggledSetting(
+        actionName,
+        !currentStateValue.userSettings.pushNotificationsEnabled
+      )
+    );
+    currentStateValue.userSettings.pushNotificationsEnabled = !currentStateValue
+      .userSettings.pushNotificationsEnabled;
     PushNotifications.scheduleNotifications(
-      hasPushNotifsEnabled,
-      timeFromState
+      currentStateValue.userSettings.pushNotificationsEnabled,
+      currentStateValue.userSettings.hourAndMinute
     );
   };
 
@@ -74,7 +77,7 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
         }}
         thumbColor={theme.colors.primary}
         onValueChange={toggleSwitch}
-        value={hasPushNotifsEnabled}
+        value={currentStateValue.userSettings.pushNotificationsEnabled}
         disabled={isTrackingNothing()}
       />
     </View>
