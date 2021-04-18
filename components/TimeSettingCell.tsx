@@ -59,17 +59,34 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
     <View style={styles.cell}>
       <Ionicons
         name={iconName}
-        color={theme.colors.border}
+        color={isTrackingNothing() ? "grey" : theme.colors.border}
         size={30}
         style={{ marginLeft: 20 }}
       />
-      <Text style={styles.title}>{settingName}</Text>
+      <Text
+        style={[
+          styles.title,
+          isTrackingNothing() ? styles.disabledtext : styles.enabledtext,
+        ]}
+      >
+        {settingName}
+      </Text>
       <TouchableOpacity
-        style={styles.timecontainer}
+        style={[
+          styles.timecontainer,
+          isTrackingNothing()
+            ? styles.disabledcontainer
+            : styles.enabledcontainer,
+        ]}
         onPress={() => setIsVisible(true)}
         disabled={isTrackingNothing()}
       >
-        <Text style={styles.timetext}>
+        <Text
+          style={[
+            styles.timetext,
+            isTrackingNothing() ? styles.disabledtext : styles.enabledtext,
+          ]}
+        >
           {convertTimeToDate(
             currentStateValue.userSettings.hourAndMinute
           ).toLocaleTimeString([], {
@@ -106,13 +123,24 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: 30,
     borderWidth: 5,
-    borderColor: theme.colors.card,
     borderRadius: 50,
     padding: 7,
   },
   timetext: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  disabledcontainer: {
+    borderColor: "grey",
+  },
+  enabledcontainer: {
+    borderColor: theme.colors.card,
+  },
+  disabledtext: {
+    color: "grey",
+  },
+  enabledtext: {
+    color: "black",
   },
 });
 
