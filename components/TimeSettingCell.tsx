@@ -5,6 +5,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { updateScheduleTime } from "../state/user_settings/actions";
 import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
+import { UserSettingsState } from "../state/user_settings/settingsReducer";
+import { isTrackingNothing } from "../state/user_settings/helpers";
 import theme from "./theme";
 
 interface TimeSettingCellProps {
@@ -21,12 +23,11 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
 
   const dispatch = useAppDispatch();
 
-  var currentStateValue: [number, number] = useAppSelector((state) => {
-    return state.settings.userSettings.schedule.hourAndMinute;
+  var currentStateValue: UserSettingsState = useAppSelector((state) => {
+    return state.settings;
   });
 
   const initialTimeValue: Date = new Date();
-  initialTimeValue.setDate(initialTimeValue.getTime() + 86400000);
   initialTimeValue.setHours(21, 0, 0);
 
   const onChange: any = (event: Event, selectedTime: any) => {
@@ -35,9 +36,15 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       return;
     }
     setIsVisible(false);
-    currentStateValue =
+    currentStateValue.userSettings.hourAndMinute =
       [selectedTime.getHours(), selectedTime.getMinutes()] || initialTimeValue;
-    dispatch(updateScheduleTime(actionName, currentStateValue));
+
+    dispatch(
+      updateScheduleTime(
+        actionName,
+        currentStateValue.userSettings.hourAndMinute
+      )
+    );
   };
 
   function convertTimeToDate(timeUnits: [number, number]) {
@@ -60,9 +67,12 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       <TouchableOpacity
         style={styles.timecontainer}
         onPress={() => setIsVisible(true)}
+        disabled={isTrackingNothing()}
       >
         <Text style={styles.timetext}>
-          {convertTimeToDate(currentStateValue).toLocaleTimeString([], {
+          {convertTimeToDate(
+            currentStateValue.userSettings.hourAndMinute
+          ).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           })}
@@ -70,7 +80,9 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       </TouchableOpacity>
       {isVisible && (
         <DateTimePicker
-          value={convertTimeToDate(currentStateValue)}
+          value={convertTimeToDate(
+            currentStateValue.userSettings.hourAndMinute
+          )}
           mode="time"
           onChange={onChange}
         />
@@ -87,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 15,
   },
   timecontainer: {
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 7,
   },
   timetext: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

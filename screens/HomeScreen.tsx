@@ -25,29 +25,29 @@ const HomeScreen: React.FC = (props): JSX.Element => {
   });
 
   interface TrackedType {
-    tracking: any;
+    tracking: boolean;
     description: string;
     id: number;
   }
 
   const currentlyTracking: TrackedType[] = [
     {
-      tracking: currentState.userSettings.hydration.isTrackingHydration,
+      tracking: currentState.userSettings.isTrackingHydration,
       description: "Proper hydration",
       id: 1,
     },
     {
-      tracking: currentState.userSettings.eating.isTrackingEating,
+      tracking: currentState.userSettings.isTrackingEating,
       description: "Desired food intake",
       id: 2,
     },
     {
-      tracking: currentState.userSettings.sleep.isTrackingSleep,
+      tracking: currentState.userSettings.isTrackingSleep,
       description: "Quality of sleep",
       id: 3,
     },
     {
-      tracking: currentState.userSettings.exercise.isTrackingExercise,
+      tracking: currentState.userSettings.isTrackingExercise,
       description: "Getting exercise",
       id: 4,
     },

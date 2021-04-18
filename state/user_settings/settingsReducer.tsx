@@ -12,45 +12,33 @@ import {
 
 export interface UserSettingsState {
   userSettings: {
-    hydration: {
-      isTrackingHydration: boolean;
-    };
-    eating: {
-      isTrackingEating: boolean;
-    };
-    sleep: {
-      isTrackingSleep: boolean;
-    };
-    exercise: {
-      isTrackingExercise: boolean;
-      targetDaysExercisePerWeek: number;
-    };
-    schedule: {
-      hourAndMinute: [number, number];
-      pushNotificationsEnabled: boolean;
-    };
+    isTrackingHydration: boolean;
+
+    isTrackingEating: boolean;
+
+    isTrackingSleep: boolean;
+
+    isTrackingExercise: boolean;
+    targetDaysExercisePerWeek: number;
+
+    hourAndMinute: [number, number];
+    pushNotificationsEnabled: boolean;
   };
 }
 
 const initial_state: UserSettingsState = {
   userSettings: {
-    hydration: {
-      isTrackingHydration: false,
-    },
-    eating: {
-      isTrackingEating: false,
-    },
-    sleep: {
-      isTrackingSleep: false,
-    },
-    exercise: {
-      isTrackingExercise: false,
-      targetDaysExercisePerWeek: 1,
-    },
-    schedule: {
-      hourAndMinute: [21, 0],
-      pushNotificationsEnabled: false,
-    },
+    isTrackingHydration: false,
+
+    isTrackingEating: false,
+
+    isTrackingSleep: false,
+
+    isTrackingExercise: false,
+    targetDaysExercisePerWeek: 1,
+
+    hourAndMinute: [21, 0],
+    pushNotificationsEnabled: false,
   },
 };
 
@@ -64,9 +52,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          hydration: {
-            isTrackingHydration: action.payload,
-          },
+          isTrackingHydration: action.payload,
         },
       };
     }
@@ -75,9 +61,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          eating: {
-            isTrackingEating: action.payload,
-          },
+          isTrackingEating: action.payload,
         },
       };
     }
@@ -86,9 +70,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          sleep: {
-            isTrackingSleep: action.payload,
-          },
+          isTrackingSleep: action.payload,
         },
       };
     }
@@ -97,10 +79,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          exercise: {
-            ...state.userSettings.exercise,
-            isTrackingExercise: action.payload,
-          },
+          isTrackingExercise: action.payload,
         },
       };
     }
@@ -109,10 +88,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          exercise: {
-            ...state.userSettings.exercise,
-            targetDaysExercisePerWeek: action.payload,
-          },
+          targetDaysExercisePerWeek: action.payload,
         },
       };
     }
@@ -121,10 +97,7 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          schedule: {
-            ...state.userSettings.schedule,
-            pushNotificationsEnabled: action.payload,
-          },
+          pushNotificationsEnabled: action.payload,
         },
       };
     }
@@ -133,10 +106,8 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-          schedule: {
-            ...state.userSettings.schedule,
-            hourAndMinute: action.payload,
-          },
+
+          hourAndMinute: action.payload,
         },
       };
     }
