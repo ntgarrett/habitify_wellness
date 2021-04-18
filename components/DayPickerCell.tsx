@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    width: 100,
+    width: 80,
     marginRight: 10,
   },
   disabled: {
