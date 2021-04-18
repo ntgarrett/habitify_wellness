@@ -56,8 +56,9 @@ const Settings: React.FC = (props): JSX.Element => {
         <Divider style={{ backgroundColor: theme.colors.card }} />
         <View style={styles.settingdesc}>
           <Text style={styles.settingdesctext}>
-            These options will determine the time to update daily progress. The
-            button on the Home screen becomes enabled.
+            These options will determine when I will update my daily progress.
+            At this time I can enter my results for the day from the Home
+            screen.
           </Text>
         </View>
         <TimeSettingCell
