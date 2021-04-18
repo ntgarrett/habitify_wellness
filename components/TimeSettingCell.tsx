@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   timecontainer: {
     marginLeft: "auto",
-    marginRight: 30,
+    marginRight: 15,
     borderWidth: 5,
     borderRadius: 50,
     padding: 7,
