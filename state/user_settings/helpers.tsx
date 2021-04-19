@@ -11,3 +11,11 @@ export function isTrackingNothing() {
   });
   return !state.includes(true);
 }
+
+export function convertTimeToDate(timeUnits: [number, number]) {
+  const date = new Date();
+  date.setHours(timeUnits[0]);
+  date.setMinutes(timeUnits[1]);
+  date.setSeconds(0);
+  return date;
+}

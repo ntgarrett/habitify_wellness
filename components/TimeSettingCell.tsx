@@ -7,7 +7,10 @@ import * as PushNotifications from "./PushNotifications";
 import { updateScheduleTime } from "../state/user_settings/actions";
 import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
-import { isTrackingNothing } from "../state/user_settings/helpers";
+import {
+  isTrackingNothing,
+  convertTimeToDate,
+} from "../state/user_settings/helpers";
 import theme from "./theme";
 
 interface TimeSettingCellProps {
@@ -57,14 +60,6 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       );
     }
   };
-
-  function convertTimeToDate(timeUnits: [number, number]) {
-    const date = new Date();
-    date.setHours(timeUnits[0]);
-    date.setMinutes(timeUnits[1]);
-    date.setSeconds(0);
-    return date;
-  }
 
   return (
     <View style={styles.cell}>
