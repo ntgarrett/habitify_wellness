@@ -10,7 +10,14 @@ import {
 import { useAppSelector } from "../state/user_settings/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
 import AppHeader from "../components/AppHeader";
+import { convertTimeToDate } from "../state/user_settings/helpers";
 import theme from "../components/theme";
+
+interface TrackedType {
+  tracking: boolean;
+  description: string;
+  id: number;
+}
 
 const HomeScreen: React.FC = (props): JSX.Element => {
   const dateFormat: Intl.DateTimeFormatOptions = {
@@ -20,35 +27,29 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     day: "numeric",
   };
 
-  const currentState: UserSettingsState = useAppSelector((state) => {
+  var currentState: UserSettingsState = useAppSelector((state) => {
     return state.settings;
   });
-
-  interface TrackedType {
-    tracking: boolean;
-    description: string;
-    id: number;
-  }
 
   const currentlyTracking: TrackedType[] = [
     {
       tracking: currentState.userSettings.isTrackingHydration,
-      description: "Proper hydration",
+      description: "💧 Proper hydration",
       id: 1,
     },
     {
       tracking: currentState.userSettings.isTrackingEating,
-      description: "Desired food intake",
+      description: "🍎 Desired food intake",
       id: 2,
     },
     {
       tracking: currentState.userSettings.isTrackingSleep,
-      description: "Quality of sleep",
+      description: "😴 Quality of sleep",
       id: 3,
     },
     {
       tracking: currentState.userSettings.isTrackingExercise,
-      description: "Getting exercise",
+      description: "💪 Getting exercise",
       id: 4,
     },
   ].filter((setting) => setting.tracking === true);
@@ -62,12 +63,12 @@ const HomeScreen: React.FC = (props): JSX.Element => {
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
       <View style={styles.datecontainer}>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 19 }}>
           {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
       <View style={styles.trackinglist}>
-        <Text style={{ fontSize: 17 }}>My daily goals I'm tracking:{"\n"}</Text>
+        <Text style={{ fontSize: 20 }}>My daily goals I'm tracking:{"\n"}</Text>
         <View>
           {noneTracked ? (
             <Text style={styles.nothingtracked}>
@@ -75,20 +76,28 @@ const HomeScreen: React.FC = (props): JSX.Element => {
             </Text>
           ) : (
             currentlyTracking.map((setting) => (
-              <Text key={setting.id} style={{ fontSize: 15 }}>
-                {"\u2022"} {setting.description}
+              <Text key={setting.id} style={{ fontSize: 20 }}>
+                {setting.description}
               </Text>
             ))
           )}
         </View>
       </View>
       <View style={styles.remaining}>
+        <Text style={styles.timemessagetext}>
+          <Text>I can update my progress at </Text>
+          <Text style={{ fontWeight: "bold" }}>
+            {convertTimeToDate(
+              currentState.userSettings.hourAndMinute
+            ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+          </Text>
+        </Text>
         <TouchableOpacity
           disabled={true}
           onPress={() => {}}
           style={styles.button}
         >
-          <Text style={{ fontSize: 20 }}>Input Today's Results</Text>
+          <Text style={styles.buttontext}>Input Today's Results</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -104,33 +113,52 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "tomato",
+    borderBottomWidth: 3,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    borderColor: theme.colors.border,
   },
   trackinglist: {
     flex: 4,
     alignItems: "center",
     justifyContent: "center",
-    //backgroundColor: "cyan",
   },
   button: {
-    backgroundColor: "#DDDDDD",
+    backgroundColor: "lightgreen",
     alignItems: "center",
     padding: 15,
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: 20,
+    borderRadius: 50,
     borderWidth: 2,
-    borderColor: "cyan",
+    width: "80%",
+    borderColor: theme.colors.border,
+    elevation: 5,
+  },
+  buttontext: {
+    fontSize: 20,
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowColor: "white",
+    textShadowRadius: 1,
   },
   nothingtracked: {
     textAlign: "center",
     maxWidth: "55%",
     color: "grey",
+    fontSize: 16,
+  },
+  timemessagetext: {
+    fontSize: 16,
+    paddingBottom: 15,
   },
   remaining: {
-    flex: 3,
+    flex: 1.5,
     justifyContent: "center",
-    backgroundColor: "yellow",
+    alignItems: "center",
+    borderTopWidth: 3,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    borderColor: theme.colors.border,
   },
 });
 
