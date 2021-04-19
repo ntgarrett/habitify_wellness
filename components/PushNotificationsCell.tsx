@@ -25,6 +25,19 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
     return state.settings;
   });
 
+  function nothingTracked() {
+    return ![
+      currentStateValue.userSettings.isTrackingHydration,
+      currentStateValue.userSettings.isTrackingEating,
+      currentStateValue.userSettings.isTrackingSleep,
+      currentStateValue.userSettings.isTrackingExercise,
+    ].includes(true);
+  }
+
+  if (nothingTracked()) {
+    Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
   const toggleSwitch = () => {
     dispatch(
       updateToggledSetting(
@@ -77,7 +90,11 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
         }}
         thumbColor={theme.colors.primary}
         onValueChange={toggleSwitch}
-        value={currentStateValue.userSettings.pushNotificationsEnabled}
+        value={
+          isTrackingNothing()
+            ? false
+            : currentStateValue.userSettings.pushNotificationsEnabled
+        }
         disabled={isTrackingNothing()}
       />
     </View>
