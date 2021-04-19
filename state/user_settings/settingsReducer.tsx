@@ -13,14 +13,10 @@ import {
 export interface UserSettingsState {
   userSettings: {
     isTrackingHydration: boolean;
-
     isTrackingEating: boolean;
-
     isTrackingSleep: boolean;
-
     isTrackingExercise: boolean;
     targetDaysExercisePerWeek: number;
-
     hourAndMinute: [number, number];
     pushNotificationsEnabled: boolean;
   };
@@ -29,14 +25,10 @@ export interface UserSettingsState {
 const initial_state: UserSettingsState = {
   userSettings: {
     isTrackingHydration: false,
-
     isTrackingEating: false,
-
     isTrackingSleep: false,
-
     isTrackingExercise: false,
     targetDaysExercisePerWeek: 1,
-
     hourAndMinute: [21, 0],
     pushNotificationsEnabled: false,
   },
