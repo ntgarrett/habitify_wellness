@@ -41,7 +41,7 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
   };
 
   useEffect(() => {
-    //PushNotifications.askNotification();
+    PushNotifications.askNotification();
     const listener = Notifications.addNotificationReceivedListener(
       PushNotifications.handleNotification
     );
