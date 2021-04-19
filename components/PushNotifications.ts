@@ -19,7 +19,7 @@ export const scheduleNotifications = (
   const schedulingOptions = {
     content: {
       title: "Habitify Wellness",
-      body: "You can now submit your progress for today",
+      body: "It's time to submit my progress for today",
       sound: true,
       priority: Notifications.AndroidNotificationPriority.HIGH,
     },
