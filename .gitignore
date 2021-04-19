@@ -9,7 +9,6 @@ npm-debug.*
 *.orig.*
 web-build/
 .vscode
-.expo-shared
 .expo
 
 # macOS
