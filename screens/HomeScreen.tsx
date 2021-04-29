@@ -141,10 +141,6 @@ const styles = StyleSheet.create({
     flex: 1.5,
     justifyContent: "center",
     alignItems: "center",
-    borderTopWidth: 3,
-    borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    borderColor: theme.colors.border,
   },
 });
 
