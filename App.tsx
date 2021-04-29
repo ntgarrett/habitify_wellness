@@ -9,7 +9,7 @@ import theme from "./components/theme";
 import HomeScreen from "./screens/HomeScreen";
 import Settings from "./screens/Settings";
 import Progress from "./screens/Progress";
-import { store, persistor } from "./state/user_settings/store";
+import { store, persistor } from "./state/store";
 
 const Tab = createBottomTabNavigator();
 

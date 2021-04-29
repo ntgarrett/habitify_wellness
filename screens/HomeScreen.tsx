@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { useAppSelector } from "../state/user_settings/hooks";
+import { useAppSelector } from "../state/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
 import AppHeader from "../components/AppHeader";
 import { convertTimeToDate } from "../state/user_settings/helpers";
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   trackinglist: {
-    flex: 4,
+    flex: 3,
     alignItems: "center",
     justifyContent: "center",
   },

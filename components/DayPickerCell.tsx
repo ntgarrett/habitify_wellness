@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
-import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { updateDaysExercisePerWeek } from "../state/user_settings/actions";
 
 interface DayPickerProps {

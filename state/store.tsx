@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { settingsReducer } from "./settingsReducer";
+import { settingsReducer } from "./user_settings/settingsReducer";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,

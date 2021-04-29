@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import * as PushNotifications from "./PushNotifications";
 import { updateScheduleTime } from "../state/user_settings/actions";
-import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
 import {
   isTrackingNothing,

@@ -4,7 +4,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Notifications from "expo-notifications";
 
 import { updateToggledSetting } from "../state/user_settings/actions";
-import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { isTrackingNothing } from "../state/user_settings/helpers";
 import * as PushNotifications from "./PushNotifications";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";

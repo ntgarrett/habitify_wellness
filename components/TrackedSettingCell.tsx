@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Switch } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { updateToggledSetting } from "../state/user_settings/actions";
-import { useAppDispatch, useAppSelector } from "../state/user_settings/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import theme from "./theme";
 
 interface SettingProps {
