@@ -62,11 +62,6 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
-      <View style={styles.datecontainer}>
-        <Text style={{ fontSize: 19 }}>
-          {new Date().toLocaleDateString(undefined, dateFormat)}
-        </Text>
-      </View>
       <View style={styles.trackinglist}>
         <Text style={{ fontSize: 20 }}>My daily goals I'm tracking:{"\n"}</Text>
         <View>
@@ -108,15 +103,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: "stretch",
-  },
-  datecontainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomWidth: 3,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    borderColor: theme.colors.border,
   },
   trackinglist: {
     flex: 4,
