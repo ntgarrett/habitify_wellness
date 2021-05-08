@@ -4,9 +4,11 @@ import thunk from "redux-thunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { settingsReducer } from "./user_settings/settingsReducer";
+import { trackingReducer } from "./data_tracking/trackingReducer";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
+  progress: trackingReducer,
 });
 
 const persistConfig = {

@@ -1,0 +1,1 @@
+export const ADD_NEW_DAY_PROGRESS = "ADD_NEW_DAY_PROGRESS";
