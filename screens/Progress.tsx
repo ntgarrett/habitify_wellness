@@ -21,6 +21,7 @@ const Progress: React.FC = (props): JSX.Element => {
           {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
+      <View style={styles.remaining}></View>
     </View>
   );
 };
@@ -30,14 +31,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  container: {
-    flex: 8,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   datecontainer: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  remaining: {
+    flex: 7,
     alignItems: "center",
     justifyContent: "center",
   },
