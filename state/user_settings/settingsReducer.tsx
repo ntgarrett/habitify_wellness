@@ -8,6 +8,7 @@ import {
   UPDATE_DAYS_EXERCISE_PER_WEEK,
   ENABLE_PUSH_NOTIFICATIONS,
   UPDATE_SCHEDULE_TIME,
+  TOGGLE_UPDATE_READY,
 } from "./types";
 
 export interface UserSettingsState {
@@ -19,6 +20,7 @@ export interface UserSettingsState {
     targetDaysExercisePerWeek: number;
     hourAndMinute: [number, number];
     pushNotificationsEnabled: boolean;
+    canUpdateProgress: boolean;
   };
 }
 
@@ -31,6 +33,7 @@ const initial_state: UserSettingsState = {
     targetDaysExercisePerWeek: 1,
     hourAndMinute: [21, 0],
     pushNotificationsEnabled: false,
+    canUpdateProgress: false,
   },
 };
 
@@ -98,8 +101,16 @@ export const settingsReducer = (
         ...state,
         userSettings: {
           ...state.userSettings,
-
           hourAndMinute: action.payload,
+        },
+      };
+    }
+    case TOGGLE_UPDATE_READY: {
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          canUpdateProgress: action.payload,
         },
       };
     }
