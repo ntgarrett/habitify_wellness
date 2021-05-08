@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { useAppSelector } from "../state/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { UserSettingsState } from "../state/user_settings/settingsReducer";
-import AppHeader from "../components/AppHeader";
 import { convertTimeToDate } from "../state/user_settings/helpers";
+import { updateToggledSetting } from "../state/user_settings/actions";
+import { IDailyData } from "../state/data_tracking/trackingReducer";
+import { hasUpdatedToday } from "../state/data_tracking/helpers";
+import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
 interface TrackedType {
@@ -20,35 +23,49 @@ interface TrackedType {
 }
 
 const HomeScreen: React.FC = (props): JSX.Element => {
-  const dateFormat: Intl.DateTimeFormatOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  const dispatch = useAppDispatch();
 
-  var currentState: UserSettingsState = useAppSelector((state) => {
+  var currentSettings: UserSettingsState = useAppSelector((state) => {
     return state.settings;
   });
 
+  var currentTrackedData: IDailyData[] = useAppSelector((state) => {
+    return state.progress;
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = new Date();
+      const updateTime = convertTimeToDate(
+        currentSettings.userSettings.hourAndMinute
+      );
+      if (currentTime >= updateTime && !hasUpdatedToday(currentTrackedData)) {
+        dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", true));
+      } else {
+        dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", false));
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const currentlyTracking: TrackedType[] = [
     {
-      tracking: currentState.userSettings.isTrackingHydration,
+      tracking: currentSettings.userSettings.isTrackingHydration,
       description: "💧 Proper hydration",
       id: 1,
     },
     {
-      tracking: currentState.userSettings.isTrackingEating,
+      tracking: currentSettings.userSettings.isTrackingEating,
       description: "🍎 Desired food intake",
       id: 2,
     },
     {
-      tracking: currentState.userSettings.isTrackingSleep,
-      description: "😴 Quality of sleep",
+      tracking: currentSettings.userSettings.isTrackingSleep,
+      description: "💤 Quality of sleep",
       id: 3,
     },
     {
-      tracking: currentState.userSettings.isTrackingExercise,
+      tracking: currentSettings.userSettings.isTrackingExercise,
       description: "💪 Getting exercise",
       id: 4,
     },
@@ -67,7 +84,7 @@ const HomeScreen: React.FC = (props): JSX.Element => {
         <View>
           {noneTracked ? (
             <Text style={styles.nothingtracked}>
-              None. Go to Settings to enable tracking your wellness goals!
+              None. Go to Settings to enable tracking wellness goals!
             </Text>
           ) : (
             currentlyTracking.map((setting) => (
@@ -80,19 +97,42 @@ const HomeScreen: React.FC = (props): JSX.Element => {
       </View>
       <View style={styles.remaining}>
         <Text style={styles.timemessagetext}>
-          <Text>I can update my progress at </Text>
-          <Text style={{ fontWeight: "bold" }}>
-            {convertTimeToDate(
-              currentState.userSettings.hourAndMinute
-            ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-          </Text>
+          {currentSettings.userSettings.canUpdateProgress ? (
+            <Text>I can now update my progress</Text>
+          ) : (
+            <Text>
+              <Text>I can update my progress at &nbsp;</Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {convertTimeToDate(
+                  currentSettings.userSettings.hourAndMinute
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Text>
+            </Text>
+          )}
         </Text>
         <TouchableOpacity
-          disabled={true}
+          disabled={!currentSettings.userSettings.canUpdateProgress}
           onPress={() => {}}
-          style={styles.button}
+          style={[
+            styles.button,
+            currentSettings.userSettings.canUpdateProgress
+              ? styles.enabledbutton
+              : styles.disabledbutton,
+          ]}
         >
-          <Text style={styles.buttontext}>Input Today's Results</Text>
+          <Text
+            style={[
+              styles.buttontext,
+              currentSettings.userSettings.canUpdateProgress
+                ? styles.textenabled
+                : styles.textdisabled,
+            ]}
+          >
+            Input Today's Results
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -110,22 +150,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "lightgreen",
     alignItems: "center",
-    padding: 15,
+    padding: 10,
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: 50,
-    borderWidth: 2,
     width: "80%",
-    borderColor: theme.colors.border,
     elevation: 5,
+    borderRadius: 50,
+  },
+  textenabled: {
+    color: "black",
+  },
+  textdisabled: {
+    color: "grey",
   },
   buttontext: {
     fontSize: 20,
     textShadowOffset: { width: -1, height: 1 },
     textShadowColor: "white",
     textShadowRadius: 1,
+  },
+  enabledbutton: {
+    backgroundColor: "lightgreen",
+    borderWidth: 2,
+    borderColor: theme.colors.border,
+  },
+  disabledbutton: {
+    backgroundColor: "lightgrey",
   },
   nothingtracked: {
     textAlign: "center",
@@ -138,7 +189,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   remaining: {
-    flex: 1.5,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
