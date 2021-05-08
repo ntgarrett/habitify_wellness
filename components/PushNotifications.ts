@@ -28,6 +28,13 @@ export const scheduleNotifications = (
   Notifications.cancelAllScheduledNotificationsAsync();
   if (hasPushNotifsEnabled) {
     Notifications.scheduleNotificationAsync(schedulingOptions);
+    Notifications.setNotificationHandler({
+      handleNotification: async () =>({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      })
+    });
   }
 };
 
