@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,16 +13,18 @@ import { convertTimeToDate } from "../state/user_settings/helpers";
 import { updateToggledSetting } from "../state/user_settings/actions";
 import { IDailyData } from "../state/data_tracking/trackingReducer";
 import { hasUpdatedToday } from "../state/data_tracking/helpers";
+import { DailyInputModal } from "../components/DailyInputModal";
 import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
 interface TrackedType {
   tracking: boolean;
-  description: string;
+  description?: string;
   id: number;
 }
 
 const HomeScreen: React.FC = (props): JSX.Element => {
+  const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
 
   var currentSettings: UserSettingsState = useAppSelector((state) => {
@@ -30,20 +32,18 @@ const HomeScreen: React.FC = (props): JSX.Element => {
   });
 
   var currentTrackedData: IDailyData[] = useAppSelector((state) => {
-    return state.progress;
+    return state.progress.trackedDays;
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const currentTime = new Date();
-      const updateTime = convertTimeToDate(
-        currentSettings.userSettings.hourAndMinute
-      );
-      if (currentTime >= updateTime && !hasUpdatedToday(currentTrackedData)) {
-        dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", true));
-      } else {
-        dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", false));
-      }
+      if (currentSettings.userSettings.canUpdateProgress === false) {
+        const currentTime: Date = new Date(Date.now());
+        const updateTime: Date = convertTimeToDate(currentSettings.userSettings.hourAndMinute);
+        if (currentTime >= updateTime && !hasUpdatedToday(currentTrackedData)) {
+          dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", true));
+        } else {}
+      } else { dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", false))}
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -77,6 +77,14 @@ const HomeScreen: React.FC = (props): JSX.Element => {
 
   return (
     <View style={styles.root}>
+      <DailyInputModal 
+        visible={visible}
+        setVisible={setVisible}
+        includeHydration={currentSettings.userSettings.isTrackingHydration}
+        includeEating={currentSettings.userSettings.isTrackingEating}
+        includeSleep={currentSettings.userSettings.isTrackingSleep}
+        includeExercise={currentSettings.userSettings.isTrackingExercise}
+      />
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
       <AppHeader title="Habitify Wellness" />
       <View style={styles.trackinglist}>
@@ -98,7 +106,7 @@ const HomeScreen: React.FC = (props): JSX.Element => {
       <View style={styles.remaining}>
         <Text style={styles.timemessagetext}>
           {currentSettings.userSettings.canUpdateProgress ? (
-            <Text>I can now update my progress</Text>
+            <Text>I can now update my progress today</Text>
           ) : (
             <Text>
               <Text>I can update my progress at &nbsp;</Text>
@@ -115,7 +123,9 @@ const HomeScreen: React.FC = (props): JSX.Element => {
         </Text>
         <TouchableOpacity
           disabled={!currentSettings.userSettings.canUpdateProgress}
-          onPress={() => {}}
+          onPress={() => {
+            setVisible(true);
+          }}
           style={[
             styles.button,
             currentSettings.userSettings.canUpdateProgress

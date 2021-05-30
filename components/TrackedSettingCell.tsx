@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   switch: {
     marginLeft: "auto",
     marginRight: 20,
-    transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
+    //transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
   },
 });
 

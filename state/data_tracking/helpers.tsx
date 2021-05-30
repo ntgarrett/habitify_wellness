@@ -5,13 +5,14 @@ export function hasUpdatedToday(state: IDailyData[]) {
   const month: number = new Date().getMonth();
   const day: number = new Date().getDate();
 
-  let results = state.filter((trackedDay) => {
+  const currentData = state;
+  currentData.filter((trackedDay) => {
     trackedDay.date.year === year &&
       trackedDay.date.month === month &&
       trackedDay.date.day === day;
   });
-
-  if (results.length > 0) {
+  
+  if (currentData.length > 0) {
     return true;
   } else {
     return false;

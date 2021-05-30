@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -19,20 +19,33 @@ interface TimeSettingCellProps {
   actionName: string;
 }
 
+interface IStateTime {
+  hourAndMinute: [number, number];
+}
+
 const TimeSettingCell: React.FC<TimeSettingCellProps> = (
   props
 ): JSX.Element => {
   const { settingName, iconName, actionName } = props;
   const [isVisible, setIsVisible] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+  const [time, setTime] = useState<IStateTime>({ hourAndMinute: [0,0] });
 
   const dispatch = useAppDispatch();
 
-  var currentStateValue: UserSettingsState = useAppSelector((state) => {
+  const currentStateValue: UserSettingsState = useAppSelector((state) => {
     return state.settings;
-  });
+  });;
 
-  const initialTimeValue: Date = new Date();
-  initialTimeValue.setHours(21, 0, 0);
+  let initialTime: IStateTime;
+
+  useEffect(() => {
+    if (initialized === false) {
+      initialTime = ({hourAndMinute: currentStateValue.userSettings.hourAndMinute});
+      setTime(initialTime);
+    } else {}
+    setInitialized(true);
+  }, []);
 
   const onChange: any = (event: Event, selectedTime: any) => {
     // User presses cancel
@@ -40,17 +53,19 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       setIsVisible(false);
       return;
     }
-
     setIsVisible(false);
-    currentStateValue.userSettings.hourAndMinute =
-      [selectedTime.getHours(), selectedTime.getMinutes()] || initialTimeValue;
+
+    const newHourAndMinute: [number, number] =
+      [selectedTime.getHours(), selectedTime.getMinutes()] || initialTime.hourAndMinute;
 
     dispatch(
       updateScheduleTime(
         actionName,
-        currentStateValue.userSettings.hourAndMinute
+        newHourAndMinute
       )
     );
+
+    setTime({ hourAndMinute: newHourAndMinute });
 
     // Push notifications already enabled, then time is changed
     if (currentStateValue.userSettings.pushNotificationsEnabled) {
@@ -94,7 +109,7 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
           ]}
         >
           {convertTimeToDate(
-            currentStateValue.userSettings.hourAndMinute
+            time.hourAndMinute
           ).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -103,9 +118,7 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
       </TouchableOpacity>
       {isVisible && (
         <DateTimePicker
-          value={convertTimeToDate(
-            currentStateValue.userSettings.hourAndMinute
-          )}
+          value={convertTimeToDate(time.hourAndMinute)}
           mode="time"
           onChange={onChange}
         />

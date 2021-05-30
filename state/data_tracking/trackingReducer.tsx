@@ -2,31 +2,37 @@ import { AnyAction } from "redux";
 import { ADD_NEW_DAY_PROGRESS } from "./types";
 
 export interface IDailyData {
-  id: number;
+  id: string;
   date: {
     day: number;
     month: number;
     year: number;
   };
   results: {
-    hydration?: boolean;
-    eating?: boolean;
-    sleep?: boolean;
-    exercise?: boolean;
+    hydration: boolean | null;
+    eating: boolean | null;
+    sleep: boolean | null;
+    exercise: boolean | null;
   };
 }
 
-const initial_state: IDailyData[] = [];
+interface DataTrackingState {
+  trackedDays: IDailyData[];
+}
+
+const initial_state: DataTrackingState = { 
+  trackedDays: []
+};
 
 export const trackingReducer = (
-  state: IDailyData[] = initial_state,
+  state: DataTrackingState = initial_state,
   action: AnyAction
 ) => {
   switch (action.type) {
     case ADD_NEW_DAY_PROGRESS: {
       return {
         ...state,
-        trackedDays: [...state, action.payload],
+        trackedDays: [...state.trackedDays, action.payload],
       };
     }
     default: {
