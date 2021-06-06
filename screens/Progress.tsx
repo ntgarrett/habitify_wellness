@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar, Dimensions } from "react-native";
+import { ProgressChart } from "react-native-chart-kit";
 
 import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
@@ -12,6 +13,12 @@ const Progress: React.FC = (props): JSX.Element => {
     day: "numeric",
   };
 
+  const chartConfig = {
+    backgroundGradientFrom: "#fff",
+    backgroundGradientTo: "#fff",
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  };
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={theme.colors.card} />
@@ -21,7 +28,17 @@ const Progress: React.FC = (props): JSX.Element => {
           {new Date().toLocaleDateString(undefined, dateFormat)}
         </Text>
       </View>
-      <View style={styles.remaining}></View>
+      <View style={styles.remaining}>
+        <ProgressChart
+          width={Dimensions.get("screen").width}
+          height={250}
+          chartConfig={chartConfig}
+          data={{
+            labels: ["Blah 1", "Blah 2", "Blah 3"],
+            data: [0.4, 0.6, 0.8],
+          }}
+        />
+      </View>
     </View>
   );
 };

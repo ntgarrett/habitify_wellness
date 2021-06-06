@@ -39,14 +39,19 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     const interval = setInterval(() => {
       if (currentSettings.userSettings.canUpdateProgress === false) {
         const currentTime: Date = new Date(Date.now());
-        const updateTime: Date = convertTimeToDate(currentSettings.userSettings.hourAndMinute);
+        const updateTime: Date = convertTimeToDate(
+          currentSettings.userSettings.hourAndMinute
+        );
         if (currentTime >= updateTime && !hasUpdatedToday(currentTrackedData)) {
           dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", true));
-        } else {}
-      } else { dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", false))}
-    }, 5000);
+        } else {
+          //dispatch(updateToggledSetting("TOGGLE_UPDATE_READY", false));
+        }
+      } else {
+      }
+    }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  });
 
   const currentlyTracking: TrackedType[] = [
     {
@@ -77,7 +82,7 @@ const HomeScreen: React.FC = (props): JSX.Element => {
 
   return (
     <View style={styles.root}>
-      <DailyInputModal 
+      <DailyInputModal
         visible={visible}
         setVisible={setVisible}
         includeHydration={currentSettings.userSettings.isTrackingHydration}

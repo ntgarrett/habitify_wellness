@@ -13,7 +13,7 @@ export function isTrackingNothing() {
 }
 
 export function convertTimeToDate(timeUnits: [number, number]) {
-  const date = new Date();
+  const date = new Date(Date.now());
   date.setHours(timeUnits[0]);
   date.setMinutes(timeUnits[1]);
   date.setSeconds(0);
