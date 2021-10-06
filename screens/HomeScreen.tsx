@@ -101,14 +101,14 @@ const HomeScreen: React.FC = (props): JSX.Element => {
             </Text>
           ) : (
             currentlyTracking.map((setting) => (
-              <Text key={setting.id} style={{ fontSize: 20 }}>
+              <Text key={setting.id} style={{ fontSize: 22, paddingVertical: 10, }}>
                 {setting.description}
               </Text>
             ))
           )}
         </View>
       </View>
-      <View style={styles.remaining}>
+      <View style={styles.updateButtonContainer}>
         <Text style={styles.timemessagetext}>
           {currentSettings.userSettings.canUpdateProgress ? (
             <Text>I can now update my progress today</Text>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   trackinglist: {
     flex: 3,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   button: {
     alignItems: "center",
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingBottom: 15,
   },
-  remaining: {
+  updateButtonContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
