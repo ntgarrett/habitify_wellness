@@ -14,14 +14,16 @@ export interface IDailyData {
     sleep: boolean | null;
     exercise: boolean | null;
   };
-}
+};
 
-interface DataTrackingState {
+export interface DataTrackingState {
   trackedDays: IDailyData[];
-}
+  totalDaysTracked: number;
+};
 
 const initial_state: DataTrackingState = { 
-  trackedDays: []
+  trackedDays: [],
+  totalDaysTracked: 0,
 };
 
 export const trackingReducer = (
@@ -33,6 +35,7 @@ export const trackingReducer = (
       return {
         ...state,
         trackedDays: [...state.trackedDays, action.payload],
+        totalDaysTracked: state.totalDaysTracked + 1,
       };
     }
     default: {
