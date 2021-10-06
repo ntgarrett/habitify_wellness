@@ -9,15 +9,17 @@ interface HeaderProps {
 
 const AppHeader: React.FC<HeaderProps> = ({ title }): JSX.Element => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>{title}</Text>
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "12%",
+    height: "10%",
     backgroundColor: theme.colors.card,
     justifyContent: "center",
     alignItems: "center",
