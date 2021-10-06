@@ -45,30 +45,32 @@ const TrackedSettingCell: React.FC<SettingProps> = (props): JSX.Element => {
   };
 
   return (
-    <View style={styles.cell}>
-      <Ionicons
-        name={iconName}
-        color={theme.colors.border}
-        size={30}
-        style={{ marginLeft: 20 }}
-      />
-      <View>
-        <Text style={styles.title}>{settingName}</Text>
-        <Text style={{ fontSize: 12, marginLeft: 15, color: "grey" }}>
-          {description}
-        </Text>
+    <>
+      <View style={styles.cell}>
+        <Ionicons
+          name={iconName}
+          color={theme.colors.border}
+          size={30}
+          style={{ marginLeft: 20 }}
+        />
+        <View>
+          <Text style={styles.title}>{settingName}</Text>
+          <Text style={{ fontSize: 12, marginLeft: 15, color: "grey" }}>
+            {description}
+          </Text>
+        </View>
+        <Switch
+          style={styles.switch}
+          trackColor={{
+            false: theme.colors.notification,
+            true: theme.colors.border,
+          }}
+          thumbColor={theme.colors.primary}
+          onValueChange={toggleSwitch}
+          value={currentStateValue}
+        />
       </View>
-      <Switch
-        style={styles.switch}
-        trackColor={{
-          false: theme.colors.notification,
-          true: theme.colors.border,
-        }}
-        thumbColor={theme.colors.primary}
-        onValueChange={toggleSwitch}
-        value={currentStateValue}
-      />
-    </View>
+    </>
   );
 };
 
@@ -86,7 +88,6 @@ const styles = StyleSheet.create({
   switch: {
     marginLeft: "auto",
     marginRight: 20,
-    //transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
   },
 });
 
