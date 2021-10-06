@@ -47,10 +47,15 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
     );
     currentStateValue.userSettings.pushNotificationsEnabled = !currentStateValue
       .userSettings.pushNotificationsEnabled;
+
     PushNotifications.scheduleNotifications(
       currentStateValue.userSettings.pushNotificationsEnabled,
       currentStateValue.userSettings.hourAndMinute
     );
+
+    if (currentStateValue.userSettings.pushNotificationsEnabled == false) {
+      Notifications.cancelAllScheduledNotificationsAsync();
+    }
   };
 
   useEffect(() => {
@@ -62,42 +67,44 @@ const PushNotificationsCell: React.FC<SettingProps> = (props): JSX.Element => {
   }, []);
 
   return (
-    <View style={styles.cell}>
-      <Ionicons
-        name={iconName}
-        color={isTrackingNothing() ? "grey" : theme.colors.border}
-        size={30}
-        style={{ marginLeft: 20 }}
-      />
-      <View>
-        <Text
-          style={[
-            styles.title,
-            isTrackingNothing() ? styles.disabled : styles.enabled,
-          ]}
-        >
-          {settingName}
-        </Text>
-        <Text style={{ fontSize: 12, marginLeft: 15, color: "grey" }}>
-          {description}
-        </Text>
+    <>
+      <View style={styles.cell}>
+        <Ionicons
+          name={iconName}
+          color={isTrackingNothing() ? "grey" : theme.colors.border}
+          size={30}
+          style={{ marginLeft: 20 }}
+        />
+        <View>
+          <Text
+            style={[
+              styles.title,
+              isTrackingNothing() ? styles.disabled : styles.enabled,
+            ]}
+          >
+            {settingName}
+          </Text>
+          <Text style={{ fontSize: 12, marginLeft: 15, color: "grey" }}>
+            {description}
+          </Text>
+        </View>
+        <Switch
+          style={styles.switch}
+          trackColor={{
+            false: theme.colors.notification,
+            true: theme.colors.border,
+          }}
+          thumbColor={theme.colors.primary}
+          onValueChange={toggleSwitch}
+          value={
+            isTrackingNothing()
+              ? false
+              : currentStateValue.userSettings.pushNotificationsEnabled
+          }
+          disabled={isTrackingNothing()}
+        />
       </View>
-      <Switch
-        style={styles.switch}
-        trackColor={{
-          false: theme.colors.notification,
-          true: theme.colors.border,
-        }}
-        thumbColor={theme.colors.primary}
-        onValueChange={toggleSwitch}
-        value={
-          isTrackingNothing()
-            ? false
-            : currentStateValue.userSettings.pushNotificationsEnabled
-        }
-        disabled={isTrackingNothing()}
-      />
-    </View>
+    </>
   );
 };
 
