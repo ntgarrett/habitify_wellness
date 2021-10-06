@@ -5,7 +5,6 @@ import {
   IS_TRACKING_EATING,
   IS_TRACKING_SLEEP,
   IS_TRACKING_EXERCISE,
-  UPDATE_DAYS_EXERCISE_PER_WEEK,
   ENABLE_PUSH_NOTIFICATIONS,
   UPDATE_SCHEDULE_TIME,
   TOGGLE_UPDATE_READY,
@@ -17,7 +16,6 @@ export interface UserSettingsState {
     isTrackingEating: boolean;
     isTrackingSleep: boolean;
     isTrackingExercise: boolean;
-    targetDaysExercisePerWeek: number;
     hourAndMinute: [number, number];
     pushNotificationsEnabled: boolean;
     canUpdateProgress: boolean;
@@ -30,7 +28,6 @@ const initial_state: UserSettingsState = {
     isTrackingEating: false,
     isTrackingSleep: false,
     isTrackingExercise: false,
-    targetDaysExercisePerWeek: 1,
     hourAndMinute: [21, 0],
     pushNotificationsEnabled: false,
     canUpdateProgress: false,
@@ -75,15 +72,6 @@ export const settingsReducer = (
         userSettings: {
           ...state.userSettings,
           isTrackingExercise: action.payload,
-        },
-      };
-    }
-    case UPDATE_DAYS_EXERCISE_PER_WEEK: {
-      return {
-        ...state,
-        userSettings: {
-          ...state.userSettings,
-          targetDaysExercisePerWeek: action.payload,
         },
       };
     }
