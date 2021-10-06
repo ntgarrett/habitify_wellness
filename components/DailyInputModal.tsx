@@ -9,16 +9,16 @@ import { updateToggledSetting } from "../state/user_settings/actions";
 import YesNoForm from "./YesNoForm";
 import theme from "./theme";
 
-interface DailyInputModalProps {
+interface IDailyInputModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<any>>;
   includeHydration: boolean;
   includeEating: boolean;
   includeSleep: boolean;
   includeExercise: boolean;
-}
+};
 
-export const DailyInputModal: React.FC<DailyInputModalProps> = (props): JSX.Element => {
+export const DailyInputModal: React.FC<IDailyInputModalProps> = (props): JSX.Element => {
   const [hydration, setHydration] = useState(null);
   const [eating, setEating] = useState(null);
   const [sleep, setSleep] = useState(null);
