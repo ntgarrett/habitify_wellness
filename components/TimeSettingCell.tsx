@@ -77,53 +77,55 @@ const TimeSettingCell: React.FC<TimeSettingCellProps> = (
   };
 
   return (
-    <View style={styles.cell}>
-      <Ionicons
-        name={iconName}
-        color={isTrackingNothing() ? "grey" : theme.colors.border}
-        size={30}
-        style={{ marginLeft: 20 }}
-      />
-      <Text
-        style={[
-          styles.title,
-          isTrackingNothing() ? styles.disabledtext : styles.enabledtext,
-        ]}
-      >
-        {settingName}
-      </Text>
-      <TouchableOpacity
-        style={[
-          styles.timecontainer,
-          isTrackingNothing()
-            ? styles.disabledcontainer
-            : styles.enabledcontainer,
-        ]}
-        onPress={() => setIsVisible(true)}
-        disabled={isTrackingNothing()}
-      >
+    <>
+      <View style={styles.cell}>
+        <Ionicons
+          name={iconName}
+          color={isTrackingNothing() ? "grey" : theme.colors.border}
+          size={30}
+          style={{ marginLeft: 20 }}
+        />
         <Text
           style={[
-            styles.timetext,
+            styles.title,
             isTrackingNothing() ? styles.disabledtext : styles.enabledtext,
           ]}
         >
-          {convertTimeToDate(
-            time.hourAndMinute
-          ).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+          {settingName}
         </Text>
-      </TouchableOpacity>
-      {isVisible && (
-        <DateTimePicker
-          value={convertTimeToDate(time.hourAndMinute)}
-          mode="time"
-          onChange={onChange}
-        />
-      )}
-    </View>
+        <TouchableOpacity
+          style={[
+            styles.timecontainer,
+            isTrackingNothing()
+              ? styles.disabledcontainer
+              : styles.enabledcontainer,
+          ]}
+          onPress={() => setIsVisible(true)}
+          disabled={isTrackingNothing()}
+        >
+          <Text
+            style={[
+              styles.timetext,
+              isTrackingNothing() ? styles.disabledtext : styles.enabledtext,
+            ]}
+          >
+            {convertTimeToDate(
+              time.hourAndMinute
+            ).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </Text>
+        </TouchableOpacity>
+        {isVisible && (
+          <DateTimePicker
+            value={convertTimeToDate(time.hourAndMinute)}
+            mode="time"
+            onChange={onChange}
+          />
+        )}
+      </View>
+    </>
   );
 };
 
