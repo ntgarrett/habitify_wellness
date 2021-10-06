@@ -5,7 +5,6 @@ import { Divider } from "react-native-elements";
 import AppHeader from "../components/AppHeader";
 import TrackedSettingCell from "../components/TrackedSettingCell";
 import TimeSettingCell from "../components/TimeSettingCell";
-import DayPickerCell from "../components/DayPickerCell";
 import PushNotificationsCell from "../components/PushNotificationsCell";
 import theme from "../components/theme";
 
@@ -52,7 +51,6 @@ const Settings: React.FC = (props): JSX.Element => {
           actionName="IS_TRACKING_EXERCISE"
           stateType="exercise"
         />
-        <DayPickerCell actionName="UPDATE_DAYS_EXERCISE_PER_WEEK" />
         <Divider style={{ backgroundColor: theme.colors.card }} />
         <View style={styles.settingdesc}>
           <Text style={styles.settingdesctext}>
