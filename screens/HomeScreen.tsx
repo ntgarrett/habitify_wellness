@@ -35,9 +35,19 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     return state.progress.trackedDays;
   });
 
+  function isTrackingAnything(state: UserSettingsState) {
+    let settings: [boolean, boolean, boolean, boolean] = [
+      state.userSettings.isTrackingHydration,
+      state.userSettings.isTrackingEating,
+      state.userSettings.isTrackingSleep,
+      state.userSettings.isTrackingExercise
+    ];
+    return settings.includes(true);
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
-      if (currentSettings.userSettings.canUpdateProgress === false) {
+      if (isTrackingAnything(currentSettings) && currentSettings.userSettings.canUpdateProgress === false) {
         const currentTime: Date = new Date(Date.now());
         const updateTime: Date = convertTimeToDate(
           currentSettings.userSettings.hourAndMinute
