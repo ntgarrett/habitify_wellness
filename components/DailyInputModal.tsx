@@ -69,7 +69,6 @@ export const DailyInputModal: React.FC<IDailyInputModalProps> = (props): JSX.Ele
         transparent={false}
         visible={props.visible}
         onRequestClose={() => {
-          console.warn("Blah");
           setHydration(null);
           setEating(null);
           setSleep(null);
