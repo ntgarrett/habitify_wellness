@@ -17,7 +17,7 @@ import { DailyInputModal } from "../components/DailyInputModal";
 import AppHeader from "../components/AppHeader";
 import theme from "../components/theme";
 
-interface TrackedType {
+interface ITrackedType {
   tracking: boolean;
   description?: string;
   id: number;
@@ -63,7 +63,7 @@ const HomeScreen: React.FC = (props): JSX.Element => {
     return () => clearInterval(interval);
   });
 
-  const currentlyTracking: TrackedType[] = [
+  const currentlyTracking: ITrackedType[] = [
     {
       tracking: currentSettings.userSettings.isTrackingHydration,
       description: "💧 Proper hydration",
